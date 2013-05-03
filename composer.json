@@ -1,0 +1,24 @@
+{
+    "name": "mach/piwik-proxy-service-provider",
+    "keywords": ["piwik", "tracker", "analytics", "silex", "service provider", "serviceprovider"],
+    "description": "PiwikProxy ServiceProvider for Silex",
+    "homepage": "http://github.com/tiraeth/piwik-proxy-service-provider",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marcin Chwedziak",
+            "email": "marcin@chwedziak.pl"
+        }
+    ],
+    "require": {
+        "silex/silex": "~1.0"
+    },
+    "autoload": {
+        "psr-0": { "Mach\\Silex\\Piwik\\": "src" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
