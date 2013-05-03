@@ -10,9 +10,9 @@ The only requirement is to have ```file_get_contents``` switched to enable URL f
 
 ## Installation
 
-Add requirement: ```php composer.phar require mach/silex-proxy-service-provider:~1.0```.
+Add requirement: ```php composer.phar require mach/piwik-proxy-service-provider:~1.0```.
 
-And update it ```php composer.phar update mach/silex-proxy-service-provider```.
+And update it ```php composer.phar update mach/piwik-proxy-service-provider```.
 
 ## Configuration
 
