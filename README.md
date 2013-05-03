@@ -30,7 +30,7 @@ Below is a structure of configuration array for the provider, and descriptions f
 {
     "piwik.proxy.url": "<url-to-piwik-installation>",
     "piwik.proxy.token": "<token-with-admin-access-to-sites>",
-    "piwik.proxy.timeout": <timeout-in-seconds-for-request>",
+    "piwik.proxy.timeout": "<timeout-in-seconds-for-request>",
     "piwik.proxy.cache": "<cache-in-seconds-for-js-file>"
 }
 ```
