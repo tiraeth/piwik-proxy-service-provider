@@ -33,7 +33,7 @@ class PiwikProxyServiceProvider implements ServiceProviderInterface
             }
 
             if (!isset($app['piwik.proxy.timeout'])) {
-                $app['piwik.timeout'] = 5;
+                $app['piwik.proxy.timeout'] = 5;
             }
 
             if (!isset($app['piwik.proxy.cache'])) {
