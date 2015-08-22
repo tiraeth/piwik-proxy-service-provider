@@ -19,11 +19,11 @@ class PiwikProxyServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $remoteContent = $this->remoteContent;
-        $app['piwik.proxy.http'] = $app->share(function($app) use ($remoteContent) {
+        $app['piwik.proxy.http'] = $app->share(function ($app) use ($remoteContent) {
             return $remoteContent;
         });
 
-        $app['piwik.proxy'] = $app->share(function($app) {
+        $app['piwik.proxy'] = $app->share(function ($app) {
             if (!isset($app['piwik.proxy.url'])) {
                 throw new \RuntimeException('The "piwik.proxy.url" config parameter should be set.');
             }
@@ -40,12 +40,12 @@ class PiwikProxyServiceProvider implements ServiceProviderInterface
                 $app['piwik.proxy.cache'] = 86400;
             }
 
-            return function(Request $request, array $options = array()) use ($app) {
+            return function (Request $request, array $options = array()) use ($app) {
                 $defaults = array(
                     'url' => $app['piwik.proxy.url'],
                     'token' => $app['piwik.proxy.token'],
                     'timeout' => $app['piwik.proxy.timeout'],
-                    'cache' => $app['piwik.proxy.cache']
+                    'cache' => $app['piwik.proxy.cache'],
                 );
 
                 $options = array_merge($defaults, $options);
@@ -58,16 +58,16 @@ class PiwikProxyServiceProvider implements ServiceProviderInterface
                     $query = $request->query->all();
                     $query['cip'] = $request->server->get('REMOTE_ADDR');
                     $query['token_auth'] = $options['token'];
-                    
+
                     $url = sprintf('%spiwik.php?%s', $options['url'], http_build_query($query));
 
                     return new Response(
                         $app['piwik.proxy.http']->get($url, array('http' => array(
                             'user_agent' => $request->server->get('HTTP_USER_AGENT'),
                             'timeout' => $options['timeout'],
-                            'header' => sprintf("Accept-Language: %s\r\n", str_replace(array("\n", "\t", "\r"), "", $request->server->get('HTTP_ACCEPT_LANGUAGE'))),
-                        ))), 
-                        200, 
+                            'header' => sprintf("Accept-Language: %s\r\n", str_replace(array("\n", "\t", "\r"), '', $request->server->get('HTTP_ACCEPT_LANGUAGE'))),
+                        ))),
+                        200,
                         array('Content-Type' => 'image/gif')
                     );
                 }

@@ -4,7 +4,6 @@ namespace Mach\Silex\Piwik\Tests;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Mach\Silex\Piwik\PiwikProxyServiceProvider;
 
 class PiwikProxyServiceProviderTest extends \PHPUnit_Framework_TestCase
@@ -58,9 +57,9 @@ class PiwikProxyServiceProviderTest extends \PHPUnit_Framework_TestCase
         $response = $app['piwik.proxy']($request);
 
         $parsedUrl = parse_url($response->getContent());
-        
+
         parse_str($parsedUrl['query'], $parsedUrl['query']);
-        
+
         $this->assertRegExp('/image\/gif/', $response->headers->get('Content-Type'));
         $this->assertEquals('piwik.example.com', $parsedUrl['host']);
         $this->assertEquals('/piwik.php', $parsedUrl['path']);
