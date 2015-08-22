@@ -2,8 +2,8 @@
 
 namespace Mach\Silex\Piwik;
 
-use Silex\Application;
-use Silex\ServiceProviderInterface;
+use Pimple\Container;
+use Pimple\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,14 +16,14 @@ class PiwikProxyServiceProvider implements ServiceProviderInterface
         $this->remoteContent = ($remoteContent === null) ? new FileGetContents() : $remoteContent;
     }
 
-    public function register(Application $app)
+    public function register(Container $app)
     {
         $remoteContent = $this->remoteContent;
-        $app['piwik.proxy.http'] = $app->share(function ($app) use ($remoteContent) {
+        $app['piwik.proxy.http'] = function ($app) use ($remoteContent) {
             return $remoteContent;
-        });
+        };
 
-        $app['piwik.proxy'] = $app->share(function ($app) {
+        $app['piwik.proxy'] = function ($app) {
             if (!isset($app['piwik.proxy.url'])) {
                 throw new \RuntimeException('The "piwik.proxy.url" config parameter should be set.');
             }
@@ -96,10 +96,6 @@ class PiwikProxyServiceProvider implements ServiceProviderInterface
                     $headers
                 )->setLastModified(new \DateTime('now'));
             };
-        });
-    }
-
-    public function boot(Application $app)
-    {
+        };
     }
 }
